@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  customer
+  driver
+  manager
+
+  @@map("userRole")
+}
+
+enum ComfortLevel {
+  economy
+  comfort
+  business
+
+  @@map("comfortLevel")
+}
+
+enum OrderStatus {
+  searchingDriver
+  driverAssigned
+  inProgress
+  finished
+  canceled
+
+  @@map("orderStatus")
+}
+
+enum ApplicationStatus {
+  pending
+  approved
+  rejected
+
+  @@map("applicationStatus")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(255)
+  phone             String              @db.VarChar(20)
+  role              UserRole
+  createdAt         DateTime?           @default(now()) @map("createdAt") @db.Timestamp
+  updatedAt         DateTime?           @updatedAt @map("updatedAt") @db.Timestamp
+  driverProfile     DriverProfile?
+  orders            Order[]             @relation("customerOrders")
+  reviewedApplications DriverApplication[] @relation("reviewedByUser")
+  credentials       UserCredential?
+
+  @@map("users")
+}
+
+model DriverProfile {
+  id                Int                 @id @default(autoincrement())
+  userId            Int                 @unique
+  comfortLevel      ComfortLevel?
+  driverLicense     String              @db.VarChar(50)
+  updatedAt         DateTime?           @updatedAt @map("updatedAt") @db.Timestamp
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cars              Car[]
+  orders            Order[]             @relation("driverOrders")
+  applications      DriverApplication[] @relation("driverApplicationProfile")
+
+  @@map("driverProfiles")
+}
+
+model Car {
+  id                Int                 @id @default(autoincrement())
+  driverId          Int
+  make              String              @db.VarChar(100)
+  model             String              @db.VarChar(100)
+  color             String?             @db.VarChar(50)
+  number            String              @unique @db.VarChar(20)
+  driverProfile     DriverProfile       @relation(fields: [driverId], references: [id], onDelete: Cascade)
+
+  @@map("cars")
+}
+
+model DriverApplication {
+  id                Int                 @id @default(autoincrement())
+  email             String              @db.VarChar(255)
+  name              String              @db.VarChar(255)
+  phone             String              @db.VarChar(20)
+  driverLicense     String?             @db.VarChar(50)
+  carMake           String?             @db.VarChar(100)
+  carModel          String?             @db.VarChar(100)
+  carColor          String?             @db.VarChar(50)
+  carNumber         String?             @db.VarChar(20)
+  comfortLevel      ComfortLevel?
+  status            ApplicationStatus   @default(pending)
+  comment           String?             @db.Text
+  reviewedBy        Int?
+  reviewedAt        DateTime?           @db.Timestamp
+  driverId          Int?
+  createdAt         DateTime?           @default(now()) @map("createdAt") @db.Timestamp
+  reviewer          User?               @relation("reviewedByUser", fields: [reviewedBy], references: [id], onDelete: SetNull)
+  driverProfile     DriverProfile?      @relation("driverApplicationProfile", fields: [driverId], references: [id], onDelete: SetNull)
+
+  @@map("driverApplications")
+}
+
+model Order {
+  id                Int                 @id @default(autoincrement())
+  customerId        Int
+  driverId          Int?
+  pickupAddress     String              @db.VarChar(255)
+  pickupLatitude    Decimal?            @db.Decimal(10, 8)
+  pickupLongitude   Decimal?            @db.Decimal(11, 8)
+  dropoffAddress    String              @db.VarChar(255)
+  dropoffLatitude   Decimal?            @db.Decimal(10, 8)
+  dropoffLongitude  Decimal?            @db.Decimal(11, 8)
+  comfortLevel      ComfortLevel
+  distanceMeters    Int?
+  durationSec       Int?
+  priceByn          Decimal?            @db.Decimal(10, 2)
+  status            OrderStatus         @default(searchingDriver)
+  createdAt         DateTime?           @default(now()) @map("createdAt") @db.Timestamp
+  updatedAt         DateTime?           @updatedAt @map("updatedAt") @db.Timestamp
+  acceptedAt        DateTime?           @db.Timestamp
+  finishedAt        DateTime?           @db.Timestamp
+  customer          User                @relation("customerOrders", fields: [customerId], references: [id], onDelete: Cascade)
+  driver            DriverProfile?      @relation("driverOrders", fields: [driverId], references: [id], onDelete: SetNull)
+  review            Review?
+
+  @@map("orders")
+}
+
+model Review {
+  id                Int                 @id @default(autoincrement())
+  orderId           Int                 @unique
+  rating            Int
+  comment           String?             @db.Text
+  order             Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model UserCredential {
+  id                Int                 @id @default(autoincrement())
+  userId            Int                 @unique
+  email             String              @unique @db.VarChar(255)
+  password          String              @db.VarChar(512)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  updatedAt         DateTime?           @updatedAt @map("updatedAt") @db.Timestamp
+
+  @@map("userCredentials")
+}
