@@ -23,7 +23,7 @@ async function main() {
     data: {
       id: 1,
       name: 'Иван',
-      phone: '+375 (29) 123-45-67',
+      phone: '+375291234567',
       role: 'customer',
       createdAt: new Date('2025-12-01T10:00:00'),
       updatedAt: new Date('2025-12-01T10:00:00'),
@@ -33,7 +33,7 @@ async function main() {
     data: {
       id: 2,
       name: 'Петр',
-      phone: '+375 (29) 222-22-22',
+      phone: '+375292222222',
       role: 'customer',
       createdAt: new Date('2025-12-02T11:00:00'),
       updatedAt: new Date('2025-12-02T11:00:00'),
@@ -43,7 +43,7 @@ async function main() {
     data: {
       id: 3,
       name: 'Иванов Иван Иванович',
-      phone: '+375 (33) 987-65-43',
+      phone: '+375339876543',
       role: 'driver',
       createdAt: new Date('2025-12-03T12:00:00'),
       updatedAt: new Date('2025-12-03T12:00:00'),
@@ -53,7 +53,7 @@ async function main() {
     data: {
       id: 4,
       name: 'Менеджер',
-      phone: '+375 (29) 333-33-33',
+      phone: '+375293333333',
       role: 'manager',
       createdAt: new Date('2025-12-04T13:00:00'),
       updatedAt: new Date('2025-12-04T13:00:00'),
@@ -63,7 +63,7 @@ async function main() {
     data: {
       id: 5,
       name: 'Петр Петров Петрович',
-      phone: '+375 (29) 111-11-11',
+      phone: '+375291111111',
       role: 'driver',
       createdAt: new Date('2025-12-05T14:00:00'),
       updatedAt: new Date('2025-12-05T14:00:00'),
@@ -118,7 +118,7 @@ async function main() {
       id: 1,
       email: 'businessdriver@test.by',
       name: 'Иванов Иван Иванович',
-      phone: '+375 (33) 987-65-43',
+      phone: '+375339876543',
       driverLicense: 'MP1234567',
       carMake: 'BMW',
       carModel: '7 Series',
@@ -138,7 +138,7 @@ async function main() {
       id: 2,
       email: 'businessdriver2@test.by',
       name: 'Петр Петров Петрович',
-      phone: '+375 (29) 111-11-11',
+      phone: '+375291111111',
       driverLicense: null,
       carMake: null,
       carModel: null,
@@ -377,8 +377,7 @@ async function main() {
       id: 1,
       userId: 1,
       email: 'usermail@test.by',
-      password:
-        '744ea9ec6fa0a83e9764b4e323d5be6b55a5accfc7fe4c08eab6a8de1fca4855',
+      password: '$2b$10$VV6LrIVgoRxOwbDk0/O/yu6.zuiVU9phdqS/lncdg0BR//t8hI2AG',
       updatedAt: new Date(),
     },
   });
@@ -387,8 +386,7 @@ async function main() {
       id: 2,
       userId: 2,
       email: 'user2mail@test.by',
-      password:
-        '744ea9ec6fa0a83e9764b4e323d5be6b55a5accfc7fe4c08eab6a8de1fca4855',
+      password: '$2b$10$VV6LrIVgoRxOwbDk0/O/yu6.zuiVU9phdqS/lncdg0BR//t8hI2AG',
       updatedAt: new Date(),
     },
   });
@@ -397,8 +395,7 @@ async function main() {
       id: 3,
       userId: 3,
       email: 'businessdriver@test.by',
-      password:
-        '744ea9ec6fa0a83e9764b4e323d5be6b55a5accfc7fe4c08eab6a8de1fca4855',
+      password: '$2b$10$VV6LrIVgoRxOwbDk0/O/yu6.zuiVU9phdqS/lncdg0BR//t8hI2AG',
       updatedAt: new Date(),
     },
   });
@@ -407,8 +404,7 @@ async function main() {
       id: 4,
       userId: 4,
       email: 'manager@test.by',
-      password:
-        '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+      password: '$2b$10$938zZAMhh9L5mhf5ctMVmOwjXkLWY2914hVXLDcMd0vsFaC1XLDqO',
       updatedAt: new Date(),
     },
   });
@@ -417,8 +413,7 @@ async function main() {
       id: 5,
       userId: 5,
       email: 'businessdriver2@test.by',
-      password:
-        'ecd71870d1963316a97e3ac3408c9835ad8cf0f3c1bc703527c30265534f75ae',
+      password: '$2b$10$VV6LrIVgoRxOwbDk0/O/yu6.zuiVU9phdqS/lncdg0BR//t8hI2AG',
       updatedAt: new Date(),
     },
   });
