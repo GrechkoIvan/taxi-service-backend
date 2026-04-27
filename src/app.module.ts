@@ -11,7 +11,12 @@ import { LoggerModule } from './modules/logger/logger.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: process.env.NODE_ENV
+        ? `.env.${process.env.NODE_ENV}`
+        : '.env',
+    }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
     AuthModule,
     DriversModule,
