@@ -22,7 +22,11 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { DriverApplicationService } from '../../modules/drivers/driver-application.service';
 import { ProcessApplicationDto } from './dtos/process-application.dto';
-import { ApplicationStatus } from '../../generated/prisma/browser';
+export enum ApplicationStatus {
+  pending = 'pending',
+  approved = 'approved',
+  rejected = 'rejected',
+}
 import type { AuthenticatedUser } from '../../common/types/authenticated-user.interface';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { DriverApplicationResponseDto } from '../drivers/dtos/driver-application-response.dto';
