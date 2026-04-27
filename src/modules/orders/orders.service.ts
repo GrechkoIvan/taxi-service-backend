@@ -203,7 +203,7 @@ export class OrdersService {
     customerId: number,
     paginationQuery: PaginationQueryDto,
   ): Promise<PaginateResult<Order>> {
-    const { offset, limit } = getPaginationOptions(paginationQuery);
+    const { offset, limit, page } = getPaginationOptions(paginationQuery);
     const where: Prisma.OrderWhereInput = { customerId };
     const [data, total] = await this.prisma.$transaction([
       this.prisma.order.findMany({
@@ -214,7 +214,7 @@ export class OrdersService {
       }),
       this.prisma.order.count({ where }),
     ]);
-    return paginate(data, total, { offset, limit });
+    return paginate(data, total, { offset, limit, page });
   }
 
   // История заказов водителя
@@ -228,9 +228,9 @@ export class OrdersService {
     if (!driver)
       return {
         data: [],
-        meta: { total: 0, offset: 0, limit: 10, hasMore: false },
+        meta: { total: 0, offset: 0, limit: 10, page: 1, hasMore: false },
       };
-    const { offset, limit } = getPaginationOptions(paginationQuery);
+    const { offset, limit, page } = getPaginationOptions(paginationQuery);
     const where: Prisma.OrderWhereInput = { driverId: driver.id };
     const [data, total] = await this.prisma.$transaction([
       this.prisma.order.findMany({
@@ -241,7 +241,7 @@ export class OrdersService {
       }),
       this.prisma.order.count({ where }),
     ]);
-    return paginate(data, total, { offset, limit });
+    return paginate(data, total, { offset, limit, page });
   }
 
   // Публичная информация о водителе для клиента (только при наличии заказа)

@@ -1,26 +1,28 @@
 export interface PaginateOptions {
   offset: number;
   limit: number;
+  page: number;
 }
 
 export interface PaginateResult<T> {
   data: T[];
   meta: {
     total: number;
-    offset: number;
+    page: number;
     limit: number;
+    offset: number;
     hasMore: boolean;
   };
 }
 
 export function getPaginationOptions(query: {
-  offset?: number;
+  page?: number;
   limit?: number;
 }): PaginateOptions {
-  return {
-    offset: query.offset ?? 0,
-    limit: query.limit ?? 10,
-  };
+  const page = query.page ?? 1;
+  const limit = query.limit ?? 10;
+  const offset = (page - 1) * limit;
+  return { offset, limit, page };
 }
 
 export function paginate<T>(
@@ -28,14 +30,15 @@ export function paginate<T>(
   total: number,
   options: PaginateOptions,
 ): PaginateResult<T> {
-  const { offset, limit } = options;
+  const { offset, limit, page } = options;
   const hasMore = offset + data.length < total;
   return {
     data,
     meta: {
       total,
-      offset,
+      page,
       limit,
+      offset,
       hasMore,
     },
   };

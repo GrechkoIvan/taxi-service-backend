@@ -87,12 +87,12 @@ export class ReviewsService {
     if (!driver) {
       return {
         data: [],
-        meta: { total: 0, offset: 0, limit: 10, hasMore: false },
+        meta: { total: 0, offset: 0, limit: 10, page: 1, hasMore: false },
         averageRating: null,
       };
     }
 
-    const { offset, limit } = getPaginationOptions(paginationQuery);
+    const { offset, limit, page } = getPaginationOptions(paginationQuery);
     const where: Prisma.ReviewWhereInput = {
       order: { driverId: driver.id },
     };
@@ -122,7 +122,7 @@ export class ReviewsService {
     ]);
 
     return {
-      ...paginate(data, total, { offset, limit }),
+      ...paginate(data, total, { offset, limit, page }),
       averageRating: aggregation._avg.rating ?? null,
     };
   }
@@ -130,7 +130,7 @@ export class ReviewsService {
   async findAll(
     paginationQuery: PaginationQueryDto,
   ): Promise<PaginateResult<Review>> {
-    const { offset, limit } = getPaginationOptions(paginationQuery);
+    const { offset, limit, page } = getPaginationOptions(paginationQuery);
 
     const [data, total] = await this.prisma.$transaction([
       this.prisma.review.findMany({
@@ -155,6 +155,6 @@ export class ReviewsService {
       this.prisma.review.count(),
     ]);
 
-    return paginate(data, total, { offset, limit });
+    return paginate(data, total, { offset, limit, page });
   }
 }
