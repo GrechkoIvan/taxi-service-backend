@@ -67,17 +67,6 @@ export class AuthService {
     return this.generateToken(credential.user.id, credential.email, dto.role);
   }
 
-  async getUserFromToken(userId: number) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
-      include: {
-        driverProfile: true,
-        credentials: { select: { email: true } },
-      },
-    });
-    return user;
-  }
-
   private generateToken(userId: number, email: string, role: string) {
     const payload = { sub: userId, email, role };
     return {

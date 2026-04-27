@@ -93,6 +93,7 @@ model DriverApplication {
   email             String              @db.VarChar(255)
   name              String              @db.VarChar(255)
   phone             String              @db.VarChar(20)
+  passwordHash      String              @db.VarChar(512)
   driverLicense     String?             @db.VarChar(50)
   carMake           String?             @db.VarChar(100)
   carModel          String?             @db.VarChar(100)
@@ -142,6 +143,7 @@ model Review {
   orderId           Int                 @unique
   rating            Int
   comment           String?             @db.Text
+  createdAt         DateTime?           @default(now()) @map("createdAt") @db.Timestamp
   order             Order               @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map("reviews")

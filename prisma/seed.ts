@@ -119,6 +119,8 @@ async function main() {
       email: 'businessdriver@test.by',
       name: 'Иванов Иван Иванович',
       phone: '+375339876543',
+      passwordHash:
+        '$2b$10$6oyC8vAQ7xFT2MyhoPXfIe1AFCcawHkkNibJZ1dvTzUstJjmgyShm',
       driverLicense: 'MP1234567',
       carMake: 'BMW',
       carModel: '7 Series',
@@ -139,6 +141,8 @@ async function main() {
       email: 'businessdriver2@test.by',
       name: 'Петр Петров Петрович',
       phone: '+375291111111',
+      passwordHash:
+        '$2b$10$6oyC8vAQ7xFT2MyhoPXfIe1AFCcawHkkNibJZ1dvTzUstJjmgyShm',
       driverLicense: null,
       carMake: null,
       carModel: null,
