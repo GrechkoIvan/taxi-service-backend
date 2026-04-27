@@ -1,7 +1,5 @@
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { ManagerModule } from './modules/manager/manager.module';
 import { UsersModule } from './modules/users/users.module';
@@ -19,7 +17,7 @@ import { ReviewsModule } from './modules/reviews/reviews.module';
     OrdersModule,
     ReviewsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
