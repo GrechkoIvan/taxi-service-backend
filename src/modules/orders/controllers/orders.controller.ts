@@ -37,7 +37,7 @@ export class OrdersController {
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('customer', 'driver', 'manager')
+  @Roles('customer', 'driver')
   findOne(
     @Param('id', ParseIntPipe) id: number,
     @CurrentUser() user: AuthenticatedUser,

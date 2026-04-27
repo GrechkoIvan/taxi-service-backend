@@ -53,7 +53,9 @@ export class OrdersService {
       const driver = await this.prisma.driverProfile.findUnique({
         where: { userId: user.sub },
       });
+
       if (!driver) return null;
+
       where.driverId = driver.id;
     } else {
       return null; // manager не имеет активного заказа
@@ -69,8 +71,6 @@ export class OrdersService {
       where: { id: orderId },
     });
     if (!order) throw new NotFoundException('Order not found');
-
-    if (user.role === 'manager') return order;
 
     if (user.role === 'customer' && order.customerId !== user.sub) {
       throw new ForbiddenException('Access denied');
