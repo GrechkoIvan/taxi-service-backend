@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { DriversController } from './drivers.controller';
+import { DriversApplicationController } from './controllers/drivers-application.controller';
 import { DriverApplicationService } from './driver-application.service';
+import { DriverProfileController } from './controllers/driver-profile.controller';
+import { UsersModule } from '../users/users.module';
 
 @Module({
-  controllers: [DriversController],
+  imports: [UsersModule],
+  controllers: [DriversApplicationController, DriverProfileController],
   providers: [DriverApplicationService],
   exports: [DriverApplicationService],
 })

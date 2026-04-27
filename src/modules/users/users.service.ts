@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../../core/prisma/prisma.service';
 import { UpdateProfileDto } from './dtos/update-profile.dto';
 
@@ -22,6 +26,18 @@ export class UsersService {
     return this.prisma.user.update({
       where: { id: userId },
       data: dto,
+    });
+  }
+
+  async setOnlineStatus(userId: number, isOnline: boolean) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+    if (!user || user.role !== 'driver') {
+      throw new BadRequestException('Only drivers can change online status');
+    }
+
+    return this.prisma.driverProfile.update({
+      where: { userId },
+      data: { isOnline },
     });
   }
 }

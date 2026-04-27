@@ -72,6 +72,7 @@ model DriverProfile {
   cars              Car[]
   orders            Order[]             @relation("driverOrders")
   applications      DriverApplication[] @relation("driverApplicationProfile")
+  isOnline          Boolean             @default(false) @map("isOnline")
 
   @@map("driverProfiles")
 }

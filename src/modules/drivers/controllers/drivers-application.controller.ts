@@ -1,9 +1,9 @@
 import { Controller, Post, Body } from '@nestjs/common';
-import { DriverApplicationService } from './driver-application.service';
-import { CreateDriverApplicationDto } from './dtos/create-driver-application.dto';
+import { DriverApplicationService } from '../driver-application.service';
+import { CreateDriverApplicationDto } from '../dtos/create-driver-application.dto';
 
 @Controller('driver-applications')
-export class DriversController {
+export class DriversApplicationController {
   constructor(private readonly appService: DriverApplicationService) {}
 
   @Post()
