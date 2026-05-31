@@ -102,7 +102,7 @@ describe('Такси-сервис (e2e)', () => {
     return body.access_token;
   };
 
-  // ------------------ СЦЕНАРИЙ 1 ------------------
+  // Сценарий 1
   describe('Полный цикл заказа', () => {
     it('создание, принятие, завершение, отзыв', async () => {
       const custToken = await loginAs('customer@test.test', 'customer');
@@ -160,7 +160,7 @@ describe('Такси-сервис (e2e)', () => {
     });
   });
 
-  // ------------------ СЦЕНАРИЙ 2 ------------------
+  // Сценарий 2
   describe('Обработка заявки водителя менеджером', () => {
     it('подача → одобрение → вход', async () => {
       // Подача заявки
@@ -176,8 +176,10 @@ describe('Такси-сервис (e2e)', () => {
       const application = appRes.body as DriverApplicationResponse;
       expect(application.status).toBe('pending');
 
-      // Менеджер логинится и одобряет
+      // Менеджер логинится
       const mgrToken = await loginAs('manager@test.test', 'manager');
+
+      // Одобряет
       await request(server)
         .patch(`/manager/driver-applications/${application.id}`)
         .set('Authorization', `Bearer ${mgrToken}`)
@@ -192,7 +194,7 @@ describe('Такси-сервис (e2e)', () => {
         })
         .expect(200);
 
-      // Новый водитель может войти
+      // Новый водитель логинится
       const loginRes = await request(server)
         .post('/auth/login')
         .send({

@@ -8,6 +8,7 @@ import { OrdersModule } from './modules/orders/orders.module';
 import { ReviewsModule } from './modules/reviews/reviews.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerModule } from './modules/logger/logger.module';
+import { RabbitMQModule } from './modules/rabbit-mq/rabbit-mq.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { LoggerModule } from './modules/logger/logger.module';
         : '.env',
     }),
     MongooseModule.forRoot(process.env.MONGO_URI!),
+    RabbitMQModule,
     AuthModule,
     DriversModule,
     UsersModule,

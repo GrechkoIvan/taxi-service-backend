@@ -8,12 +8,14 @@ import { PrismaService } from '../../core/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dtos/login.dto';
 import { RegisterCustomerDto } from './dtos/register-customer.dto';
+import { RabbitMQService } from '../rabbit-mq/rabbit-mq.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
+    private rabbitMQ: RabbitMQService,
   ) {}
 
   async registerCustomer(dto: RegisterCustomerDto) {
@@ -42,6 +44,12 @@ export class AuthService {
       },
       include: { credentials: { select: { email: true } } },
     });
+
+    await this.rabbitMQ.sendEmail(
+      dto.email,
+      'Добро пожаловать!',
+      `Здравствуйте, ${dto.name}! Вы успешно зарегистрировались в нашем такси-сервисе.`,
+    );
 
     return this.generateToken(user.id, user.credentials!.email, user.role);
   }

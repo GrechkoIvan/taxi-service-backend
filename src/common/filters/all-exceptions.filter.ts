@@ -10,8 +10,6 @@ import { ErrorLogService } from '../../modules/logger/error-log.service';
 import { AuthenticatedUser } from '../types/authenticated-user.interface';
 import { HttpExceptionResponse } from '../dtos/http-exception-response.dto';
 
-// Тип для ответа HttpException (message может быть строкой или массивом)
-
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   constructor(private readonly errorLogService: ErrorLogService) {}
